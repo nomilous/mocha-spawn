@@ -2,7 +2,7 @@
 
 # mocha-fork
 
-Start background processes in mocha tests.
+Mocha hooks to start/stop background proccess in tests.
 
 ### API
 

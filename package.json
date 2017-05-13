@@ -1,0 +1,30 @@
+{
+  "name": "mocha-fork",
+  "version": "1.0.0",
+  "description": "Start background processes in mocha tests. Edit",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nomilous/mocha-fork.git"
+  },
+  "keywords": [
+    "mocha",
+    "fork",
+    "background",
+    "process"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nomilous/mocha-fork/issues"
+  },
+  "homepage": "https://github.com/nomilous/mocha-fork#readme",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "fetch": "^1.1.0",
+    "mocha": "^3.3.0"
+  }
+}

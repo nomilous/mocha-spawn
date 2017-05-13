@@ -1,6 +1,6 @@
 {
   "name": "mocha-fork",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mocha hooks to start/stop background proccess in tests.",
   "main": "index.js",
   "scripts": {

@@ -2,9 +2,9 @@ var MochaFork = require('..');
 var path = require('path');
 var expect = require('expect.js');
 
-describe('with kill', function () {
+describe('with message and kill', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'server-with-message');
+  var scriptFile = path.resolve(__dirname, 'procs', 'server-send-message-to-parent');
   var scriptOpts = {};
 
   var originalAfter = global.after;
@@ -15,9 +15,9 @@ describe('with kill', function () {
 
   });
 
-  var emitter = MochaFork.start(scriptFile, scriptOpts);
+  var server = MochaFork.start(scriptFile, scriptOpts);
 
-  it('can send message and kill', function (done) {
+  it('can send message from child and kill', function (done) {
 
     var exited = false;
 
@@ -34,14 +34,14 @@ describe('with kill', function () {
 
     };
 
-    emitter.once('message', function (data) {
+    server.once('event-name', function (data) {
 
-      expect(data).to.eql({some: 'data'});
+      expect(data).to.eql({some: 'data from child'});
       MochaFork.kill(scriptFile);
 
     });
 
-    emitter.once('exit', function (code, signal) {
+    server.once('exit', function (code, signal) {
 
       expect(code).to.be(null);
       expect(signal).to.be('SIGTERM');

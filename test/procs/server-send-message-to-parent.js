@@ -4,8 +4,8 @@ MochaFork.onStart(function (done) {
 
   setInterval(function () {
 
-    MochaFork.send({
-      some: 'data'
+    MochaFork.send('event-name', {
+      some: 'data from child'
     });
 
   }, 50);

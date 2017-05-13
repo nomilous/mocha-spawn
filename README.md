@@ -45,7 +45,7 @@ MochaFork.onStop(function (done) {
 
 ##### MochaFork.onStart(fn)
 
-Define the function `fn` that should be run to start things up in the child process. The function will be called with opts as passed to `MochaFork.before.start(scriptPath[, opts])` and a callback `done` to signal to signal that the child process is ready.
+Define the function `fn` that should be run to start things up in the child process. The function will be called with opts as passed to `MochaFork.before.start(scriptPath[, opts])` and a callback `done` to signal that the child process is ready.
 
 ##### MochaFork.onStop(fn)
 

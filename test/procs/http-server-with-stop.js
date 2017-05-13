@@ -2,7 +2,7 @@ var MochaFork = require('../..');
 var http = require('http');
 var server;
 
-MochaFork.start(function (done, opts) {
+MochaFork.onStart(function (done, opts) {
 
   var onListen, onError;
 
@@ -28,7 +28,7 @@ MochaFork.start(function (done, opts) {
 
 });
 
-MochaFork.stop(function (done) {
+MochaFork.onStop(function (done) {
 
   server.close(done);
 

@@ -1,6 +1,6 @@
 var MochaFork = require('../..');
 
-MochaFork.start(function (done) {
+MochaFork.onStart(function (done) {
 
   setInterval(function () {
 

@@ -135,7 +135,7 @@ const MyServiceBeingTested = require('../..');
 var service;
 
 MochaFork.onStart(async function (opts) {
-  // create() return promise of service
+  // create() returns promise of service
   service = await MyServiceBeingTested.create(opts);
 });
 

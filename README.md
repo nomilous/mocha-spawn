@@ -30,7 +30,7 @@ MochaFork.onStart(function (opts, done) {
     done(e);
     
     // Send event up to the test in parent process.
-  	MochaFork.send('event-name', {some: 'data'}, 'more');
+    MochaFork.send('event-name', {some: 'data'}, 'more');
   });
 });
 

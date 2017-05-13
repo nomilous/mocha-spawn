@@ -24,13 +24,13 @@ var service = new MyServiceBeingTested();
 
 MochaFork.onStart(function (opts, done) {
   // Called when the test starts this script as child process.
-  
-  // Send event up to the test in parent process.
-  MochaFork.send('event-name', {some: 'data'}, 'more');
-  
-  // Call done once the child is fully up.
+    
   service.start(opts, function (e) {
+    // Call done once the child is fully up.
     done(e);
+    
+    // Send event up to the test in parent process.
+  	MochaFork.send('event-name', {some: 'data'}, 'more');
   });
 });
 

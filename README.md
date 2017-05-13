@@ -74,6 +74,7 @@ describe('with background process', function () {
   
   // create after hook that stops script after tests
   MochaFork.after.stop(scriptPath);
+  // MochaFork.after.kill(scriptPath);
   
   it('test', function () {});
   

@@ -3,7 +3,7 @@ var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
 
-describe.only('with stop', function () {
+describe('with stop', function () {
 
   var scriptFile = path.resolve(__dirname, 'procs', 'http-server-with-stop');
   var scriptOpts = {

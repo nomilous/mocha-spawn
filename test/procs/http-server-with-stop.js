@@ -1,8 +1,8 @@
-var MockaFork = require('../..');
+var MochaFork = require('../..');
 var http = require('http');
 var server;
 
-MockaFork.start(function (done, opts) {
+MochaFork.start(function (done, opts) {
 
   var onListen, onError;
 
@@ -28,7 +28,7 @@ MockaFork.start(function (done, opts) {
 
 });
 
-MockaFork.stop(function (done) {
+MochaFork.stop(function (done) {
 
   server.close(done);
 

@@ -8,5 +8,4 @@ node_js:
 #    - master
 
 script:
-- node --version
 - npm test

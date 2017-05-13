@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/nomilous/mocha-fork.svg?branch=master)](https://travis-ci.org/nomilous/mocha-fork)
+[![npm](https://img.shields.io/npm/v/mocha-fork.svg)](https://www.npmjs.com/package/mocha-fork)[![Build Status](https://travis-ci.org/nomilous/mocha-fork.svg?branch=master)](https://travis-ci.org/nomilous/mocha-fork)[![Coverage Status](https://coveralls.io/repos/github/nomilous/mocha-fork/badge.svg?branch=master)](https://coveralls.io/github/nomilous/mocha-fork?branch=master)
 
 # mocha-fork
 

@@ -35,8 +35,8 @@ MochaFork.onStart(function (opts, done) {
 });
 
 MochaFork.onStop(function (done) {
-  // Called when a test stop this client.
-  // Only necessary when using MochaFork.after.stop() in tests
+  // Called when a test stops this client.
+  // Only necessary when using MochaFork.after.stop() in the test.
   
   service.stop(done);
 });

@@ -70,7 +70,9 @@ describe('with background process', function () {
   var scriptOpts = {};
   
   // create before hook that spawns script before tests
-  MochaFork.before.start(scriptPath, scriptOpts);
+  var child = MochaFork.before.start(scriptPath, scriptOpts);
+  
+  child.on('event-name', function (data, more) {});
   
   // create after hook that stops script after tests
   MochaFork.after.stop(scriptPath);

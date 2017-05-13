@@ -16,10 +16,6 @@ describe('with error', function () {
 
   });
 
-  // MochaFork.start(scriptFile);
-  //
-  // MochaFork.stop(scriptFile);
-
   it('can error on start', function (done) {
 
     global.before = function (title, fn) {
@@ -37,6 +33,26 @@ describe('with error', function () {
     };
 
     MochaFork.start(scriptFile);
+
+  });
+
+  it('can error on stop', function (done) {
+
+    global.after = function (title, fn) {
+
+      var doneFn = function (error) {
+
+        expect(error.name).to.be('Error');
+        expect(error.message).to.be('Failed to stop');
+        done();
+
+      };
+
+      fn(doneFn);
+
+    };
+
+    MochaFork.stop(scriptFile);
 
   });
 

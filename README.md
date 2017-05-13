@@ -49,7 +49,7 @@ Define the function `fn` that should be run to start things up in the child proc
 
 ##### MochaFork.onStop(fn)
 
-Define the function `fn` that shoud be called to tear down the child process (stop whatever service it's running). This is used by `MochaFork.after.stop(scriptPath)`.
+​	Define the function `fn` that shoud be called to tear down the child process (stop whatever service it's running). This is used by `MochaFork.after.stop(scriptPath)`.
 
 ##### MochaFork.send(eventName[, data...])
 
@@ -106,7 +106,7 @@ Custom events as emitted from child using `MochaFork.send(eventName[, data...])`
 
 Creates a mocha after hook to stop the child process. Requires that the child script defines the stop function with `MochaFork.onStop(fn)`. 
 
-This and is useful to ensure the service running in the child stops cleanly without requiring a `kill`.
+This is useful to ensure the service running in the child stops cleanly without requiring a `kill`.
 
 ##### MochaFork.after.kill(scriptPath)
 

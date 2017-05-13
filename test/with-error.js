@@ -32,7 +32,7 @@ describe('with error', function () {
 
     };
 
-    MochaFork.start(scriptFile);
+    MochaFork.before.start(scriptFile);
 
   });
 
@@ -52,7 +52,7 @@ describe('with error', function () {
 
     };
 
-    MochaFork.stop(scriptFile);
+    MochaFork.after.stop(scriptFile);
 
   });
 

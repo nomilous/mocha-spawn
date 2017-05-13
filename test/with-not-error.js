@@ -6,9 +6,9 @@ describe('with not error', function () {
 
   var scriptFile = path.resolve(__dirname, 'procs', 'server-with-non-errors');
 
-  MochaFork.start(scriptFile);
+  MochaFork.before.start(scriptFile);
 
-  MochaFork.stop(scriptFile);
+  MochaFork.after.stop(scriptFile);
 
   it('started and stopped', function () {});
 

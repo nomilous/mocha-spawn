@@ -11,11 +11,11 @@ describe('with stop', function () {
     host: 'localhost'
   };
 
-  MochaFork.start(scriptFile, scriptOpts);
+  MochaFork.before.start(scriptFile, scriptOpts);
 
-  MochaFork.stop(scriptFile);
+  MochaFork.after.stop(scriptFile);
 
-  MochaFork.kill(scriptFile);
+  MochaFork.after.kill(scriptFile);
 
   it('started server', function (done) {
 

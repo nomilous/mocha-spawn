@@ -15,7 +15,7 @@ describe('with message and kill', function () {
 
   });
 
-  var server = MochaFork.start(scriptFile, scriptOpts);
+  var server = MochaFork.before.start(scriptFile, scriptOpts);
 
   it('can send message from child and kill', function (done) {
 
@@ -37,7 +37,7 @@ describe('with message and kill', function () {
     server.once('event-name', function (data) {
 
       expect(data).to.eql({some: 'data from child'});
-      MochaFork.kill(scriptFile);
+      MochaFork.after.kill(scriptFile);
 
     });
 

@@ -1,6 +1,6 @@
 var MochaFork = require('../..');
 
-MochaFork.onStart(function (done) {
+MochaFork.onStart(function (opts, done) {
 
   done(new Error('Failed to start'));
 

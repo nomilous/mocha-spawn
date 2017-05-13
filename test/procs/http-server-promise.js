@@ -14,7 +14,7 @@ class HttpServer {
 
     return new Promise((resolve, reject) => {
 
-      let onListen, onError;
+      var onListen, onError;
 
       this.server = http.createServer((req, res) => {
         res.end('ASYNC SERVER OK');

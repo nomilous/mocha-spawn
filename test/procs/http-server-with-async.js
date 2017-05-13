@@ -1,20 +1,18 @@
 const MochaFork = require('../..');
 const HttpServer = require('./http-server-promise');
 
-// const server = new HttpServer();
-let server;
+// var server = new HttpServer();
+var server;
 
-MochaFork.onStart(async function (done, opts) {
+MochaFork.onStart(async function (opts) {
 
   // await server.start(opts);
   server = await HttpServer.create(opts);
-  done();
 
 });
 
-MochaFork.onStop(async function (done) {
+MochaFork.onStop(async function () {
 
   await server.stop();
-  done();
 
 });

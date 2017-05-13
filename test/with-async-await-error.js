@@ -8,6 +8,57 @@ if (!semver.satisfies(process.version, '^7.10.0')) return;
 
 describe('with async await error', function () {
 
-  it('xxx');
+  var scriptFile = path.resolve(__dirname, 'procs', 'server-with-async-errors');
+  var scriptOpts = {};
+
+  var originalBefore = global.before;
+  var originalAfter = global.after;
+
+  afterEach(function () {
+
+    global.before = originalBefore;
+    global.after = originalAfter;
+
+  });
+
+  it('handles async rejections on start', function (done) {
+
+    global.before = function (title, fn) {
+
+      var doneFn = function (error) {
+
+        expect(error.name).to.be('Error');
+        expect(error.message).to.be('Failed to start');
+        done();
+
+      };
+
+      fn(doneFn);
+
+    };
+
+    MochaFork.before.start(scriptFile, scriptOpts);
+
+  });
+
+  it('handles async rejections on stop', function (done) {
+
+    global.after = function (title, fn) {
+
+      var doneFn = function (error) {
+
+        expect(error.name).to.be('Error');
+        expect(error.message).to.be('Failed to stop');
+        done();
+
+      };
+
+      fn(doneFn);
+
+    };
+
+    MochaFork.after.stop(scriptFile);
+
+  });
 
 });

@@ -10,7 +10,7 @@ npm install mocha-fork --save-dev
 
 ### API
 
-#### In the child process
+#### In the child process script
 
 These functions are for use in child processes as spawned from the mocha tests.
 
@@ -54,7 +54,7 @@ Define the function `fn` that shoud be called to tear down the child process (st
 
 Send event up to the test in parent process. see `MochaFork.before.start(scriptPath[, opts])`
 
-#### In the mocha test
+#### In the mocha test script
 
 These functions are for creating mocha before and after hooks to spawn the child processes.
 

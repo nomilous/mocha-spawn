@@ -84,7 +84,7 @@ describe('with background process', function () {
 
 Creates a mocha before hook that starts the script in a child process and passes opts to `onStart(fn)` .
 
-__NB:__ Requires use of `MochaFork.after.stop(scriptPath)` or `MochaFork.after.kill(scriptPath)` otherwise the background process will not be stopped.
+__NB:__ Requires use of `MochaFork.after.stop(scriptPath)` or `MochaFork.after.kill(scriptPath)` otherwise the child process will not be stopped.
 
 __NB:__ `scriptPath` is used as key in list of running child processes. This means that the same script cannot be used more than once in a test file.
 
@@ -96,7 +96,7 @@ Emitted with `code` and `signal` when the child process exits.
 
 ###### Event: custom events
 
-Custom events as emitted from child using `MochaFork.send(eventName[, data])`.
+Custom events as emitted from child using `MochaFork.send(eventName[, data...])`.
 
 ##### MochaFork.after.stop(scriptPath)
 

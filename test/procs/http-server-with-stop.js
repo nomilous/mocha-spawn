@@ -7,11 +7,12 @@ MochaFork.onStart(function (opts, done) {
   var onListen, onError;
 
   server = http.createServer(function (request, response) {
-    response.end('OK');
+    response.end(process.pid + ' OK');
   });
 
   onListen = function () {
     server.removeListener('error', onError);
+    MochaFork.send('started', {pid: process.pid});
     done();
   };
 

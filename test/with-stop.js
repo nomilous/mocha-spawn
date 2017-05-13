@@ -21,7 +21,7 @@ describe('with stop', function () {
 
       if (e) return done(e);
 
-      expect(body.toString()).to.be('OK');
+      expect(body.toString()).to.match(/OK/);
       done();
 
     });

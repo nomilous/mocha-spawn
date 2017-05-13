@@ -6,7 +6,7 @@ MochaFork.onStart(function (opts, done) {
 
     MochaFork.send('event-name', {
       some: 'data from child'
-    });
+    }, 'more');
 
   }, 50);
 

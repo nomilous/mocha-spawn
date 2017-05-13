@@ -34,9 +34,10 @@ describe('with message and kill', function () {
 
     };
 
-    child.once('event-name', function (data) {
+    child.once('event-name', function (data1, data2) {
 
-      expect(data).to.eql({some: 'data from child'});
+      expect(data1).to.eql({some: 'data from child'});
+      expect(data2).to.equal('more');
       MochaFork.after.kill(scriptFile);
 
     });

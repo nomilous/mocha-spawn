@@ -36,7 +36,8 @@ MochaFork.onStart(function (opts, done) {
 
 MochaFork.onStop(function (done) {
   // Called when a test stops this child process.
-  // Only necessary when using MochaFork.after.stop() in the test.
+  // Only necessary when using MochaFork.after.stop() in the test,
+  // as opposed to MochaFork.after.kill().
   
   service.stop(done);
 });

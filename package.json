@@ -1,11 +1,11 @@
 {
   "name": "mocha-fork",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Mocha hooks to start/stop background proccess in tests.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "cover": "istanbul cover _mocha"
+    "test": "mocha test/*.js test/unit/*.js",
+    "cover": "istanbul cover _mocha -- test/*.js test/unit/*.js"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,5 @@
 var MochaFork = require('..');
 var path = require('path');
-var expect = require('expect.js');
 
 describe('with not error', function () {
 

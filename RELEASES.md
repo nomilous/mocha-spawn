@@ -16,4 +16,3 @@
 - added opts to stop and kill
 - added opts.timeout
 - send to child with multiple event args
-- emit instead of send for ipc

@@ -117,8 +117,7 @@ describe('unit - child', function () {
 
           handler({
             action: 'message',
-            event: 'event-name',
-            data: 'event-data'
+            args: ['event-name','event-data']
           });
 
         }

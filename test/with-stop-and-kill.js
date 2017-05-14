@@ -13,9 +13,9 @@ describe('with stop and kill', function () {
 
   var childRef = MochaFork.before.start(scriptFile, scriptOpts);
 
-  childRef.after.stop();
+  childRef.after.stop({timeout: 1000});
 
-  childRef.after.kill();
+  childRef.after.kill({timeout: 1000});
 
   it('started server', function (done) {
 

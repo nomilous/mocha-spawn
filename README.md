@@ -55,7 +55,7 @@ Define the function `fn` that shoud be called to tear down the child process (st
 
 ##### MochaFork.send(eventName[, data...])
 
-Send event up to the test in parent process. see `MochaFork.before.start(scriptPath[, opts])`
+Send event up to the test in parent process. see `childRef.send(eventName[, data...])`
 
 ##### MochaFork.on(eventName, handler)
 
@@ -130,7 +130,7 @@ Does not call `fn` as assigned in `MochaFork.onStop(fn)` in the client script.
 
 ##### childRef.on(eventName, handler)
 
-Handle events sent from child process using `MochaFork.send(eventName[, data...])`.
+Handle events sent from child process using as sent using `MochaFork.send(eventName[, data...])`.
 
 ###### Event: 'exit'
 

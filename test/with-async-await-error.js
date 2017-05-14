@@ -21,6 +21,8 @@ describe('with async await error', function () {
 
   });
 
+  var childRef;
+
   it('handles async rejections on start', function (done) {
 
     global.before = function (title, fn) {
@@ -37,7 +39,7 @@ describe('with async await error', function () {
 
     };
 
-    MochaFork.before.start(scriptFile, scriptOpts);
+    childRef = MochaFork.before.start(scriptFile, scriptOpts);
 
   });
 
@@ -57,7 +59,7 @@ describe('with async await error', function () {
 
     };
 
-    MochaFork.after.stop(scriptFile);
+    childRef.after.stop();
 
   });
 

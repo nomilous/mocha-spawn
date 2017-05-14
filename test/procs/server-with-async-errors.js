@@ -16,7 +16,7 @@ MochaFork.onStart(async function (opts) {
 
 });
 
-MochaFork.onStop(async function (done) {
+MochaFork.onStop(async function (opts, done) {
 
   await failPromise('Failed to stop');
   done();

@@ -12,11 +12,11 @@ describe('with each', function () {
     host: 'localhost'
   };
 
-  var child = MochaFork.beforeEach.start(scriptFile, scriptOpts);
+  var childRef = MochaFork.beforeEach.start(scriptFile, scriptOpts);
 
-  MochaFork.afterEach.stop(scriptFile);
+  childRef.afterEach.stop();
 
-  child.on('started', function (data) {
+  childRef.on('started', function (data) {
 
     var pid = data.pid;
 
@@ -32,7 +32,7 @@ describe('with each', function () {
 
       if (e) return done(e);
 
-      expect(body.toString()).to.be(child._child.pid + ' OK');
+      expect(body.toString()).to.be(childRef._child.pid + ' OK');
       done();
 
     });
@@ -45,7 +45,7 @@ describe('with each', function () {
 
       if (e) return done(e);
 
-      expect(body.toString()).to.be(child._child.pid + ' OK');
+      expect(body.toString()).to.be(childRef._child.pid + ' OK');
       done();
 
     });
@@ -58,7 +58,7 @@ describe('with each', function () {
 
       if (e) return done(e);
 
-      expect(body.toString()).to.be(child._child.pid + ' OK');
+      expect(body.toString()).to.be(childRef._child.pid + ' OK');
       done();
 
     });

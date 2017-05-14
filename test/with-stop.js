@@ -8,12 +8,15 @@ describe('with stop', function () {
   var scriptFile = path.resolve(__dirname, 'procs', 'http-server-with-stop');
   var scriptOpts = {
     port: 8080,
-    host: 'localhost'
+    host: 'localhost',
+    timeout: 1000
   };
 
-  MochaFork.before.start(scriptFile, scriptOpts);
+  var childRef = MochaFork.before.start(scriptFile, scriptOpts);
 
-  MochaFork.after.stop(scriptFile);
+  childRef.after.stop({
+    timeout: 1000
+  });
 
   it('started server', function (done) {
 

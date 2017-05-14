@@ -16,6 +16,8 @@ describe('with error', function () {
 
   });
 
+  var hookRef;
+
   it('can error on start', function (done) {
 
     global.before = function (title, fn) {
@@ -32,7 +34,7 @@ describe('with error', function () {
 
     };
 
-    MochaFork.before.start(scriptFile);
+    hookRef = MochaFork.before.start(scriptFile);
 
   });
 
@@ -52,7 +54,7 @@ describe('with error', function () {
 
     };
 
-    MochaFork.after.stop(scriptFile);
+    hookRef.after.stop();
 
   });
 

@@ -13,6 +13,8 @@ MochaFork.onStart(async function (opts) {
 
 MochaFork.onStop(async function () {
 
+  console.log('STOP 1');
+
   await server.stop();
 
 });

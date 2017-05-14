@@ -6,15 +6,15 @@ describe('with child', function () {
 
   var scriptFile = path.resolve(__dirname, 'procs', 'server-with-non-errors');
 
-  var child = MochaFork.before.start(scriptFile);
+  var hookRef = MochaFork.before.start(scriptFile);
 
-  MochaFork.after.stop(scriptFile);
+  hookRef.after.stop();
 
   it('has access to child', function () {
 
-    expect(typeof child._child).to.be('object');
+    expect(typeof hookRef._child).to.be('object');
 
-    expect(typeof child._child.pid).to.be('number');
+    expect(typeof hookRef._child.pid).to.be('number');
 
   });
 

@@ -14,9 +14,9 @@ describe('with async await', function () {
     host: 'localhost'
   };
 
-  var hookRef = MochaFork.before.start(scriptFile, scriptOpts);
+  var childRef = MochaFork.before.start(scriptFile, scriptOpts);
 
-  hookRef.after.stop();
+  childRef.after.stop();
 
   it('started server', function (done) {
 

@@ -7,26 +7,26 @@ describe('with multiple same script', function () {
 
   var scriptFile = path.resolve(__dirname, 'procs', 'http-server-with-stop');
 
-  var hookRef1 = MochaFork.before.start(scriptFile, {
+  var childRef1 = MochaFork.before.start(scriptFile, {
     port: 8080,
     host: 'localhost'
   });
 
-  var hookRef2 = MochaFork.before.start(scriptFile, {
+  var childRef2 = MochaFork.before.start(scriptFile, {
     port: 8081,
     host: 'localhost'
   });
 
-  var hookRef3 = MochaFork.before.start(scriptFile, {
+  var childRef3 = MochaFork.before.start(scriptFile, {
     port: 8082,
     host: 'localhost'
   });
 
-  hookRef1.after.stop();
+  childRef1.after.stop();
 
-  hookRef2.after.stop();
+  childRef2.after.stop();
 
-  hookRef3.after.stop();
+  childRef3.after.stop();
 
   it('started server 1', function (done) {
 

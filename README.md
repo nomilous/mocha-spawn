@@ -30,7 +30,7 @@ MochaFork.onStart(function (opts, done) {
     done(e);
     
     // Send event up to the test in parent process.
-    MochaFork.send('event-name', {some: 'data'}, 'more');
+    MochaFork.send('event-name-1', {some: 'data'}, 'more');
   });
 });
 
@@ -68,18 +68,30 @@ var path = require('path');
 describe('with background process', function () {
   
   var scriptPath = path.resolve(__dirname, 'procs', 'background-service');
-  var scriptOpts = {};
+  var scriptStartOpts = {};
+  var scriptStopOpts = {};
   
   // create before hook that spawns script before tests
-  var child = MochaFork.before.start(scriptPath, scriptOpts);
+  var childRef = MochaFork.before.start(scriptPath, scriptStartOpts);
   
-  child.on('event-name', function (data, more) {});
+  // subscribe to events from the child script
+  childRef.on('event-name-1', function (data, more) {});
   
   // create after hook that stops script after tests
-  MochaFork.after.stop(scriptPath);
-  // MochaFork.after.kill(scriptPath);
+  childRef.after.stop(scriptStopOpts);
+  // hookRef.after.kill(scriptStopOpts);
   
-  it('test', function () {});
+  it('test', function (done) {
+    
+    // interact with child through events
+    
+    childRef.on('event-name-2-reply', function (some, stuff) {
+      done();
+    });
+    
+    childRef.send('event-name-2', some, stuff);
+    
+  });
   
 });
 ```
@@ -88,9 +100,9 @@ describe('with background process', function () {
 
 Creates a mocha before hook that starts the script in a child process and passes opts to `onStart(fn)` .
 
-__NB:__ Requires use of `MochaFork.after.stop(scriptPath)` or `MochaFork.after.kill(scriptPath)` otherwise the child process will not be stopped.
+__NB:__ Requires use of `MochaFork.after.stop([opts])` or `MochaFork.after.kill([opts])` otherwise the child process will not be stopped.
 
-__NB:__ `scriptPath` is used as key in list of running child processes. This means that the same script cannot be used more than once in a test file.
+Include opts.timeout in milliseconds to adjust hook timeout.
 
 Returns an `EventEmitter` instance (including `._child` containing the actual child process)
 
@@ -102,27 +114,33 @@ Emitted with `code` and `signal` when the child process exits.
 
 Custom events as emitted from child using `MochaFork.send(eventName[, data...])`.
 
-##### MochaFork.after.stop(scriptPath)
+##### MochaFork.after.stop([opts])
 
 Creates a mocha after hook to stop the child process. Requires that the child script defines the stop function with `MochaFork.onStop(fn)`. 
 
 This is useful to ensure the service running in the child stops cleanly without requiring a `kill`.
 
-##### MochaFork.after.kill(scriptPath)
+Include opts.timeout in milliseconds to adjust hook timeout.
+
+##### MochaFork.after.kill([opts])
 
 Creates a mocha after hook to kill the background process.
+
+Include opts.timeout in milliseconds to adjust hook timeout.
+
+Does not call `fn` as assigned in `MochaFork.onStop(fn)` in the client script.
 
 ##### MochaFork.beforeEach.start(scriptPath[, opts])
 
 Similar to `MochaFork.before.start(scriptPath[, opts])` except that it starts background script in mocha beforeEach hook. 
 
-##### MochaFork.afterEach.stop(scriptPath)
+##### MochaFork.afterEach.stop([opts])
 
-Similar to `MochaFork.after.stop(scriptPath)`.
+Similar to `MochaFork.after.stop([opts])`.
 
-##### MochaFork.afterEach.kill(scriptPath)
+##### MochaFork.afterEach.kill([opts])
 
-Similar to `MochaFork.after.kill(scriptPath)`.
+Similar to `MochaFork.after.kill([opts])`.
 
 ### With async/await
 

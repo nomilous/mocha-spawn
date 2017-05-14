@@ -13,5 +13,7 @@
 - removed after and afterEach
 - before and beforeEach .start returns hookRef with after and afterEach
 - remove scriptPath from .stop and .kill
-- added opts to stop
-- use emit instead of send for ipc events
+- added opts to stop and kill
+- added opts.timeout
+- send to child with multiple event args
+- emit instead of send for ipc

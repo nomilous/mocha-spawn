@@ -16,7 +16,7 @@ describe('with error', function () {
 
   });
 
-  var hookRef;
+  var childRef;
 
   it('can error on start', function (done) {
 
@@ -34,7 +34,7 @@ describe('with error', function () {
 
     };
 
-    hookRef = MochaFork.before.start(scriptFile);
+    childRef = MochaFork.before.start(scriptFile);
 
   });
 
@@ -54,7 +54,7 @@ describe('with error', function () {
 
     };
 
-    hookRef.after.stop();
+    childRef.after.stop();
 
   });
 

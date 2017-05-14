@@ -29,7 +29,7 @@ MochaFork.onStart(function (opts, done) {
 
 });
 
-MochaFork.onStop(function (done) {
+MochaFork.onStop(function (opts, done) {
 
   server.close(done);
 

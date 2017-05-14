@@ -201,7 +201,7 @@ describe('unit - child', function () {
 
       };
 
-      var stopFn = function(doneFn) {
+      var stopFn = function(opts, doneFn) {
 
         doneFn(new Error('error stopping'));
 

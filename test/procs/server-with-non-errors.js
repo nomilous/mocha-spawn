@@ -6,7 +6,7 @@ MochaFork.onStart(function (opts, done) {
 
 });
 
-MochaFork.onStop(function (done) {
+MochaFork.onStop(function (opts, done) {
 
   done('not error if not error');
 

@@ -22,6 +22,8 @@ var MyServiceBeingTested = require('../..');
 
 var service = new MyServiceBeingTested();
 
+MochaFork.on('event-from-parent', function (some, data) {});
+
 MochaFork.onStart(function (opts, done) {
   // Called when the test starts this script as child process.
     
@@ -34,9 +36,9 @@ MochaFork.onStart(function (opts, done) {
   });
 });
 
-MochaFork.onStop(function (done) {
+MochaFork.onStop(function (opts, done) {
   // Called when a test stops this child process.
-  // Only necessary when using MochaFork.after.stop() in the test,
+  // Only necessary when using MochaFork.after.stop([opts]) in the test,
   // as opposed to MochaFork.after.kill().
   
   service.stop(done);
@@ -45,15 +47,19 @@ MochaFork.onStop(function (done) {
 
 ##### MochaFork.onStart(fn)
 
-Define the function `fn` that should be run to start things up in the child process. The function will be called with opts as passed to `MochaFork.before.start(scriptPath[, opts])` and a callback `done` to signal that the child process is ready.
+Define the function `fn` that should be run to start things up in the child process. The function will be called with `opts` as passed to `MochaFork.before.start(scriptPath[, opts])` and a callback `done` to signal that the child process is ready.
 
 ##### MochaFork.onStop(fn)
 
-​	Define the function `fn` that shoud be called to tear down the child process (stop whatever service it's running). This is used by `MochaFork.after.stop(scriptPath)`.
+Define the function `fn` that shoud be called to tear down the child process (stop whatever service it's running). This is used by `MochaFork.after.stop([opts])`. The  `fn` receives the `opts` from `childRef.after.stop([opts])` and `done` to signal that the tear down is complete.
 
 ##### MochaFork.send(eventName[, data...])
 
 Send event up to the test in parent process. see `MochaFork.before.start(scriptPath[, opts])`
+
+##### MochaFork.on(eventName, handler)
+
+Receive event from parent process.
 
 #### In the mocha test script
 
@@ -104,17 +110,9 @@ __NB:__ Requires use of `MochaFork.after.stop([opts])` or `MochaFork.after.kill(
 
 Include opts.timeout in milliseconds to adjust hook timeout.
 
-Returns an `EventEmitter` instance (including `._child` containing the actual child process)
+Returns `childRef` for creating corresponding mocha after hooks to stop the child process or interacting with the child process.
 
-###### Event: 'exit'
-
-Emitted with `code` and `signal` when the child process exits.
-
-###### Event: custom events
-
-Custom events as emitted from child using `MochaFork.send(eventName[, data...])`.
-
-##### MochaFork.after.stop([opts])
+##### childRef.after.stop([opts])
 
 Creates a mocha after hook to stop the child process. Requires that the child script defines the stop function with `MochaFork.onStop(fn)`. 
 
@@ -122,7 +120,7 @@ This is useful to ensure the service running in the child stops cleanly without 
 
 Include opts.timeout in milliseconds to adjust hook timeout.
 
-##### MochaFork.after.kill([opts])
+##### childRef.after.kill([opts])
 
 Creates a mocha after hook to kill the background process.
 
@@ -130,15 +128,33 @@ Include opts.timeout in milliseconds to adjust hook timeout.
 
 Does not call `fn` as assigned in `MochaFork.onStop(fn)` in the client script.
 
+##### childRef.on(eventName, handler)
+
+Handle events sent from child process using `MochaFork.send(eventName[, data...])`.
+
+###### Event: 'exit'
+
+Emitted with `code` and `signal` when the child process exits.
+
+###### Event: custom events
+
+Custom events as emitted from child.
+
+##### childRef.send(eventName[, data...])
+
+Send events to child process. The child subscribes with `MochaFork.on(eventName, handler)`.
+
 ##### MochaFork.beforeEach.start(scriptPath[, opts])
 
-Similar to `MochaFork.before.start(scriptPath[, opts])` except that it starts background script in mocha beforeEach hook. 
+Similar to `MochaFork.before.start(scriptPath[, opts])` except that it starts background script in mocha beforeEach hook.
 
-##### MochaFork.afterEach.stop([opts])
+Returns `childRef` 
+
+##### childRef.afterEach.stop([opts])
 
 Similar to `MochaFork.after.stop([opts])`.
 
-##### MochaFork.afterEach.kill([opts])
+##### childRef.afterEach.kill([opts])
 
 Similar to `MochaFork.after.kill([opts])`.
 
@@ -161,7 +177,7 @@ MochaFork.onStart(async function (opts) {
   service = await MyServiceBeingTested.create(opts);
 });
 
-MochaFork.onStop(async function () {
+MochaFork.onStop(async function (opts) {
   await service.stop();
 });
 ```

@@ -106,8 +106,6 @@ describe('with background process', function () {
 
 Creates a mocha before hook that starts the script in a child process and passes opts to `onStart(fn)` .
 
-__NB:__ Requires use of `MochaFork.after.stop([opts])` or `MochaFork.after.kill([opts])` otherwise the child process will not be stopped.
-
 Include opts.timeout in milliseconds to adjust hook timeout.
 
 Returns `childRef` for creating corresponding mocha after hooks to stop the child process or interacting with the child process.
@@ -117,6 +115,8 @@ Returns `childRef` for creating corresponding mocha after hooks to stop the chil
 Creates a mocha after hook to stop the child process. Requires that the child script defines the stop function with `MochaFork.onStop(fn)`. 
 
 This is useful to ensure the service running in the child stops cleanly without requiring a `kill`.
+
+If the hook times out it means that the child did not relinquish all resources (eg. still listening on socket or running a setInterval)
 
 Include opts.timeout in milliseconds to adjust hook timeout.
 

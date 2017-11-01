@@ -2,163 +2,208 @@
 
 # mocha-spawn
 
-Mocha hooks to start/stop background proccess in tests.
+Mocha hooks to start/stop background local or remote proccesses in tests.
+
+
 
 ```
 npm install mocha-spawn --save-dev
 ```
 
-### API
-
-#### In the child process script
-
-These functions are for use in child processes as spawned from the mocha tests.
-
-eg. in `./test/procs/background-service.js`
-
 ```javascript
-var MochaSpawn = require('mocha-spawn');
-var MyServiceBeingTested = require('../..');
-
-var service = new MyServiceBeingTested();
-
-MochaSpawn.on('event-from-parent', function (some, data) {});
-
-MochaSpawn.onStart(function (opts, done) {
-  // Called when the test starts this script as child process.
-
-  service.start(opts, function (e) {
-    // Call done once the child is fully up.
-    done(e);
-
-    // Send event up to the test in parent process.
-    MochaSpawn.send('event-name-1', {some: 'data'}, 'more');
-  });
-});
-
-MochaSpawn.onStop(function (opts, done) {
-  // Called when a test stops this child process.
-  // Only necessary when using MochaSpawn.after.stop([opts]) in the test,
-  // as opposed to MochaSpawn.after.kill().
-
-  service.stop(done);
-});
+const mochaSpawn = require('mocha-spawn');
 ```
 
-##### MochaSpawn.onStart(fn)
 
-Define the function `fn` that should be run to start things up in the child process. The function will be called with `opts` as passed to `Mochaspawn.before.start(scriptPath[, opts])` and a callback `done` to signal that the child process is ready.
 
-##### MochaSpawn.onStop(fn)
+## In the parent process (the test script)
 
-Define the function `fn` that shoud be called to tear down the child process (stop whatever service it's running). This is used by `MochaSpawn.after.stop([opts])`. The  `fn` receives the `opts` from `childRef.after.stop([opts])` and `done` to signal that the tear down is complete.
 
-##### MochaSpawn.send(eventName[, data...])
 
-Send event up to the test in parent process. see `childRef.send(eventName[, data...])`
+###mochaSpawn.before.start(scriptPath[, opts])
 
-##### MochaSpawn.on(eventName, handler)
+### mochaSpawn.beforeEach.start(scriptPath[, opts])
 
-Receive event from parent process.
+ * `scriptPath` \<string> Absolute path to the script to run in the child process.
+ * `opts` \<Object> Optional parameters to pass to the starting child.
+ * Returns \<childRef> A reference to the child facilitation further interaction.
 
-#### In the mocha test script
+Creates a `before` or `beforeEach` hook that starts the child process accordingly.
 
-These functions are for creating mocha before and after hooks to spawn the child processes.
+The `opts` will be passed to the [mochaSpawn.onStart(fn)](#mochaspawnonstartfn) handler `fn` in the child script.
 
-eg. in `./test/with-background-process.js`
+The returned `childRef` will be used for intraprocess communication and to create the necesary `after` or `afterEach` hooks to stop the child where necessary.
+
+Include `opts.timeout` in milliseconds to adjust hook timeout.
+
+
+
+###childRef.after.stop([opts])
+
+### childRef.afterEach.stop([opts])
+
+* `opts` \<Object> Optional stopping parameters to pass to the child.
+
+Creates an `after` of `afterEach` hook in the test to stop the child process cleanly. In other words, to call the [mochaSpawn.onStop(fn)](#mochaspawnonstopfn) in the client script and allow the child to tear itself down neatly with whatever code was placed in that handler `fn` - and then wait for the child to exit.
+
+If the hook times out it means that the child did not relinquish all resources (eg. still listening on socket or running a setInterval). Try [childRef.after.kill([opts])](#childrefafterkillopts) if all else fails.
+
+Include `opts.timeout` in milliseconds to adjust hook timeout.
+
+
+
+Example:
 
 ```javascript
-var MochaSpawn = require('mocha-spawn');
+var mochaSpawn = require('mocha-spawn');
 var path = require('path');
 
 describe('with background process', function () {
 
-  var scriptPath = path.resolve(__dirname, 'procs', 'background-service');
+  var scriptPath = path.resolve(__dirname, 'procs', 'background-script.js');
   var scriptStartOpts = {};
   var scriptStopOpts = {};
 
   // create before hook that spawns script before tests
-  var childRef = MochaSpawn.before.start(scriptPath, scriptStartOpts);
-
-  // subscribe to events from the child script
-  childRef.on('event-name-1', function (data, more) {});
+  var childRef = mochaSpawn.before.start(scriptPath, scriptStartOpts);
 
   // create after hook that stops script after tests
   childRef.after.stop(scriptStopOpts);
-  // hookRef.after.kill(scriptStopOpts);
 
-  it('test', function (done) {
-
-    // interact with child through events
-
-    childRef.on('event-name-2-reply', function (some, stuff) {
-      done();
-    });
-
-    childRef.send('event-name-2', some, stuff);
+  it('can', function () {
 
   });
 
 });
 ```
 
-##### MochaSpawn.before.start(scriptPath[, opts])
 
-Creates a mocha before hook that starts the script in a child process and passes opts to `onStart(fn)` .
 
-Include opts.timeout in milliseconds to adjust hook timeout.
+### childRef.after.kill([opts])
 
-Returns `childRef` for creating corresponding mocha after hooks to stop the child process or interacting with the child process.
+### childRef.afterEach.kill([opts])
 
-##### childRef.after.stop([opts])
+Creates an `after` or `afterEach` hook to kill the child process. Does not call  [mochaSpawn.onStop(fn)](#mochaspawnonstopfn) handler `fn` in the child process.
 
-Creates a mocha after hook to stop the child process. Requires that the child script defines the stop function with `MochaSpawn.onStop(fn)`.
+Include `opts.timeout` in milliseconds to adjust hook timeout.
 
-This is useful to ensure the service running in the child stops cleanly without requiring a `kill`.
 
-If the hook times out it means that the child did not relinquish all resources (eg. still listening on socket or running a setInterval)
 
-Include opts.timeout in milliseconds to adjust hook timeout.
+###childRef.on(eventName, handler)
 
-##### childRef.after.kill([opts])
+Handle events sent from the child process using as sent using [mochaSpawn.send(eventName[, data…])](#mochaspawnsendeventname-data).
 
-Creates a mocha after hook to kill the background process.
-
-Include opts.timeout in milliseconds to adjust hook timeout.
-
-Does not call `fn` as assigned in `MochaSpawn.onStop(fn)` in the client script.
-
-##### childRef.on(eventName, handler)
-
-Handle events sent from child process using as sent using `MochaSpawn.send(eventName[, data...])`.
-
-###### Event: 'exit'
+#### Event: 'exit'
 
 Emitted with `code` and `signal` when the child process exits.
 
-###### Event: custom events
+#### Event: custom events
 
 Custom events as emitted from child.
 
-##### childRef.send(eventName[, data...])
 
-Send events to child process. The child subscribes with `MochaSpawn.on(eventName, handler)`.
 
-##### MochaSpawn.beforeEach.start(scriptPath[, opts])
+### childRef.send(eventName[, data...])
 
-Similar to `MochaSpawn.before.start(scriptPath[, opts])` except that it starts background script in mocha beforeEach hook.
+Send events to child process. The child subscribes with [mochaSpawn.on(eventName, handler)](#mochaspawnoneventname-handler).
 
-Returns `childRef`
+Functions cannot be sent to the child process.
 
-##### childRef.afterEach.stop([opts])
 
-Similar to `MochaSpawn.after.stop([opts])`.
 
-##### childRef.afterEach.kill([opts])
+Example:
 
-Similar to `MochaSpawn.after.kill([opts])`.
+```javascript
+it('test', function (done) {
 
-### With async/await
+  // interact with child through events
+
+  childRef.on('some-thing-result', function (results) {
+    expect(results).to.eql({ /*...*/ });
+    done();
+  });
+
+  childRef.send('do-some-thing', params);
+
+});
+```
+
+
+
+## In the child process script
+
+
+
+###mochaSpawn.onStart(fn)
+
+* `fn` \<Function> The handler to start the client script when called by parent.
+
+Define the function `fn` that should be run to start things up in the child process. The function will be called with `opts` as passed from the parent in [mochaSpawn.before.start(scriptPath[, opts])](#mochaspawnbeforestartscriptpath-opts) as well as a callback `done` to signal that the child process is ready.
+
+
+
+###mochaSpawn.onStop(fn)
+
+* `fn` \<Function> The handler to stop the client script when called by parent.
+
+Define the function `fn` that shoud be called to tear down the child process (stop whatever service it's running). The  `fn` receives the `opts` as passed to [childRef.after.stop([opts])](#childrefafterstopopts) in the parent as well as a `done` function to signal that the tear down is complete.
+
+
+
+Example:
+
+```javascript
+var mochaSpawn = require('mocha-spawn');
+var MyServiceBeingTested = require('../..');
+
+var myService = new MyServiceBeingTested();
+
+mochaSpawn.onStart(function (opts, done) {
+
+  myService.start(opts, function (e) {
+    done(e);
+  });
+
+});
+
+mochaSpawn.onStop(function (opts, done) {
+
+  myService.stop(done);
+
+});
+```
+
+
+
+###mochaSpawn.send(eventName[, data...])
+
+Send event up to the test in parent process.
+
+
+
+###mochaSpawn.on(eventName, handler)
+
+Receive event from parent process.
+
+
+
+Example:
+
+```javascript
+mochaSpawn.on('do-some-thing', function (params) {
+
+  myService.doSomething(params, function (err, results) {
+
+    mochaSpawn.send('some-thing-result', err, results);
+
+  });
+
+});
+```
+
+
+
+##With async/await
 
 requires node ^7.10.0
 
@@ -167,17 +212,17 @@ The child script can use async/await functions.
 eg. in `./test/procs/background-service.js`
 
 ```javascript
-const MochaSpawn = require('mocha-spawn');
+const mochaSpawn = require('mocha-spawn');
 const MyServiceBeingTested = require('../..');
 
 var service;
 
-MochaSpawn.onStart(async function (opts) {
+mochaSpawn.onStart(async function (opts) {
   // create() returns promise of service
   service = await MyServiceBeingTested.create(opts);
 });
 
-MochaSpawn.onStop(async function (opts) {
+mochaSpawn.onStop(async function (opts) {
   await service.stop();
 });
 ```

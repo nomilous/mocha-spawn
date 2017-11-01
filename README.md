@@ -22,6 +22,8 @@ const mochaSpawn = require('mocha-spawn');
 
 ###mochaSpawn.before.start(scriptPath[, opts])
 
+See immediately below.
+
 ### mochaSpawn.beforeEach.start(scriptPath[, opts])
 
  * `scriptPath` \<string> Absolute path to the script to run in the child process.
@@ -39,6 +41,8 @@ Include `opts.timeout` in milliseconds to adjust hook timeout.
 
 
 ###childRef.after.stop([opts])
+
+See immediately below.
 
 ### childRef.afterEach.stop([opts])
 
@@ -80,6 +84,8 @@ describe('with background process', function () {
 
 
 ### childRef.after.kill([opts])
+
+See immediately below.
 
 ### childRef.afterEach.kill([opts])
 

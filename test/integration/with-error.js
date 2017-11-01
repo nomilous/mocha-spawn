@@ -1,10 +1,10 @@
-var MochaSpawn = require('..');
+var MochaSpawn = require('../..');
 var path = require('path');
 var expect = require('expect.js');
 
 describe('with error', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'server-with-errors');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'server-with-errors');
 
   var originalBefore = global.before;
   var originalAfter = global.after;

@@ -1,10 +1,10 @@
-var MochaSpawn = require('..');
+var MochaSpawn = require('../..');
 var path = require('path');
 var expect = require('expect.js');
 
 describe('with reply from client', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'server-with-reply');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'server-with-reply');
 
   var childRef = MochaSpawn.before.start(scriptFile);
 

@@ -1,10 +1,10 @@
-var MochaSpawn = require('..');
+var MochaSpawn = require('../..');
 var path = require('path');
 var expect = require('expect.js');
 
 describe('with message and kill', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'server-send-message-to-parent');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'server-send-message-to-parent');
   var scriptOpts = {};
 
   var originalAfter = global.after;

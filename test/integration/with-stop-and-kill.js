@@ -1,22 +1,21 @@
-var MochaSpawn = require('..');
+var MochaSpawn = require('../..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
 
-describe('with stop', function () {
+describe('with stop and kill', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'http-server-with-stop');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'http-server-with-stop');
   var scriptOpts = {
     port: 8080,
-    host: 'localhost',
-    timeout: 1000
+    host: 'localhost'
   };
 
   var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
 
-  childRef.after.stop({
-    timeout: 1000
-  });
+  childRef.after.stop({timeout: 1000});
+
+  childRef.after.kill({timeout: 1000});
 
   it('started server', function (done) {
 

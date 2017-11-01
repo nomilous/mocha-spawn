@@ -1,14 +1,14 @@
-var MochaSpawn = require('..');
+var MochaSpawn = require('../..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
 var semver = require('semver');
 
-if (!semver.satisfies(process.version, '^7.10.0')) return;
+if (!semver.satisfies(process.version, '>=7.10.0')) return;
 
 describe('with async await error', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'server-with-async-errors');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'server-with-async-errors');
   var scriptOpts = {};
 
   var originalBefore = global.before;

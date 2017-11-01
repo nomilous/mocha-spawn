@@ -1,22 +1,22 @@
-var MochaSpawn = require('..');
+var MochaSpawn = require('../..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
-var semver = require('semver');
 
-if (!semver.satisfies(process.version, '^7.10.0')) return;
+describe('with stop', function () {
 
-describe('with async await', function () {
-
-  var scriptFile = path.resolve(__dirname, 'procs', 'http-server-with-async');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'http-server-with-stop');
   var scriptOpts = {
     port: 8080,
-    host: 'localhost'
+    host: 'localhost',
+    timeout: 1000
   };
 
   var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
 
-  childRef.after.stop();
+  childRef.after.stop({
+    timeout: 1000
+  });
 
   it('started server', function (done) {
 
@@ -24,7 +24,7 @@ describe('with async await', function () {
 
       if (e) return done(e);
 
-      expect(body.toString()).to.be('ASYNC SERVER OK');
+      expect(body.toString()).to.match(/OK/);
       done();
 
     });

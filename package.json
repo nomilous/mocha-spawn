@@ -1,14 +1,14 @@
 {
   "name": "mocha-spawn",
   "version": "2.0.2",
-  "description": "Mocha hooks to start/stop background proccess in tests.",
+  "description": "Mocha hooks to start/stop background local or remote proccesses in tests.",
   "engines": {
     "node": ">=4"
   },
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.js test/unit/*.js",
-    "cover": "istanbul cover _mocha -- test/*.js test/unit/*.js"
+    "test": "mocha test/integration/*.js test/unit/*.js",
+    "cover": "istanbul cover _mocha -- test/integration/*.js test/unit/*.js"
   },
   "repository": {
     "type": "git",
@@ -33,5 +33,9 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.3.0",
     "semver": "^5.3.0"
+  },
+  "dependencies": {
+    "pem": "^1.12.3",
+    "socket.io": "^2.0.4"
   }
 }

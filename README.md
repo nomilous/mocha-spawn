@@ -206,7 +206,7 @@ requires node >=7.10.0
 
 The child script can use async/await functions.
 
-eg. in `./test/procs/background-service.js`
+Example:
 
 ```javascript
 const mochaSpawn = require('mocha-spawn');

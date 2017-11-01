@@ -10,6 +10,16 @@ describe('with remote', function () {
 
   remoteAgent.after.stop();
 
-  it('xxxx');
+  // just in case
+  remoteAgent.on('error', function (err) {
+    console.error('ERROR', err);
+  });
+
+  it('xxxx', function (done) {
+
+    this.timeout(30000);
+    
+
+  });
 
 });

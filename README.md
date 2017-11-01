@@ -202,7 +202,7 @@ mochaSpawn.on('do-some-thing', function (params) {
 
 ## With async/await
 
-requires node ^7.10.0
+requires node >=7.10.0
 
 The child script can use async/await functions.
 

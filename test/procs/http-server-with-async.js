@@ -1,4 +1,4 @@
-const Mochapawn = require('../..');
+const MochaSpawn = require('../..');
 const HttpServer = require('./http-server-promise');
 
 // var server = new HttpServer();

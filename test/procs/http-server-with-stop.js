@@ -1,8 +1,8 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 var http = require('http');
 var server;
 
-MochaSpawn.onStart(function (opts, done) {
+mochaSpawn.onStart(function (opts, done) {
 
   var onListen, onError;
 
@@ -12,7 +12,7 @@ MochaSpawn.onStart(function (opts, done) {
 
   onListen = function () {
     server.removeListener('error', onError);
-    MochaSpawn.send('started', {pid: process.pid});
+    mochaSpawn.send('started', {pid: process.pid});
     done();
   };
 
@@ -29,7 +29,7 @@ MochaSpawn.onStart(function (opts, done) {
 
 });
 
-MochaSpawn.onStop(function (opts, done) {
+mochaSpawn.onStop(function (opts, done) {
 
   server.close(done);
 

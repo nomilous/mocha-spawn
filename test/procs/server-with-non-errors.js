@@ -1,12 +1,12 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 
-MochaSpawn.onStart(function (opts, done) {
+mochaSpawn.onStart(function (opts, done) {
 
   done('not error if not error');
 
 });
 
-MochaSpawn.onStop(function (opts, done) {
+mochaSpawn.onStop(function (opts, done) {
 
   done('not error if not error');
 

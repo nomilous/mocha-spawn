@@ -1,4 +1,4 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var expect = require('expect.js');
 
@@ -34,7 +34,7 @@ describe('with error', function () {
 
     };
 
-    childRef = MochaSpawn.before.start(scriptFile);
+    childRef = mochaSpawn.before.start(scriptFile);
 
   });
 

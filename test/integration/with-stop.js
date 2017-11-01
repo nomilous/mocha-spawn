@@ -1,4 +1,4 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
@@ -12,7 +12,7 @@ describe('with stop', function () {
     timeout: 1000
   };
 
-  var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.before.start(scriptFile, scriptOpts);
 
   childRef.after.stop({
     timeout: 1000

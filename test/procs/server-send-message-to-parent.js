@@ -1,10 +1,10 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 
-MochaSpawn.onStart(function (opts, done) {
+mochaSpawn.onStart(function (opts, done) {
 
   setInterval(function () {
 
-    MochaSpawn.send('event-name', {
+    mochaSpawn.send('event-name', {
       some: 'data from child'
     }, 'more');
 

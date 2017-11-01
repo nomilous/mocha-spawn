@@ -1,12 +1,12 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 
-MochaSpawn.onStart(function (opts, done) {
+mochaSpawn.onStart(function (opts, done) {
 
   done();
 
 });
 
-MochaSpawn.on('event-name', function (data) {
+mochaSpawn.on('event-name', function (data) {
 
   if (data.kill) process.exit(1);
 

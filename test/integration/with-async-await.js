@@ -1,4 +1,4 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
@@ -14,7 +14,7 @@ describe('with async await', function () {
     host: 'localhost'
   };
 
-  var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.before.start(scriptFile, scriptOpts);
 
   childRef.after.stop();
 

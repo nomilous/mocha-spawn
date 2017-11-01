@@ -1,4 +1,4 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var expect = require('expect.js');
 
@@ -15,7 +15,7 @@ describe('with message and kill', function () {
 
   });
 
-  var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.before.start(scriptFile, scriptOpts);
 
   it('can send message from child and kill', function (done) {
 

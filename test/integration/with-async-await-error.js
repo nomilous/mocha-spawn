@@ -1,6 +1,5 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 var path = require('path');
-var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
 var semver = require('semver');
 
@@ -39,7 +38,7 @@ describe('with async await error', function () {
 
     };
 
-    childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
+    childRef = mochaSpawn.before.start(scriptFile, scriptOpts);
 
   });
 

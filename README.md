@@ -20,10 +20,7 @@ const mochaSpawn = require('mocha-spawn');
 
 
 
-###mochaSpawn.before.start(scriptPath[, opts])
-
-See immediately below.
-
+### mochaSpawn.before.start(scriptPath[, opts])
 ### mochaSpawn.beforeEach.start(scriptPath[, opts])
 
  * `scriptPath` \<string> Absolute path to the script to run in the child process.
@@ -40,10 +37,7 @@ Include `opts.timeout` in milliseconds to adjust hook timeout.
 
 
 
-###childRef.after.stop([opts])
-
-See immediately below.
-
+### childRef.after.stop([opts])
 ### childRef.afterEach.stop([opts])
 
 * `opts` \<Object> Optional stopping parameters to pass to the child.
@@ -84,9 +78,6 @@ describe('with background process', function () {
 
 
 ### childRef.after.kill([opts])
-
-See immediately below.
-
 ### childRef.afterEach.kill([opts])
 
 Creates an `after` or `afterEach` hook to kill the child process. Does not call  [mochaSpawn.onStop(fn)](#mochaspawnonstopfn) handler `fn` in the child process.
@@ -95,7 +86,7 @@ Include `opts.timeout` in milliseconds to adjust hook timeout.
 
 
 
-###childRef.on(eventName, handler)
+### childRef.on(eventName, handler)
 
 Handle events sent from the child process using as sent using [mochaSpawn.send(eventName[, data…])](#mochaspawnsendeventname-data).
 
@@ -140,7 +131,7 @@ it('test', function (done) {
 
 
 
-###mochaSpawn.onStart(fn)
+### mochaSpawn.onStart(fn)
 
 * `fn` \<Function> The handler to start the client script when called by parent.
 
@@ -148,7 +139,7 @@ Define the function `fn` that should be run to start things up in the child proc
 
 
 
-###mochaSpawn.onStop(fn)
+### mochaSpawn.onStop(fn)
 
 * `fn` \<Function> The handler to stop the client script when called by parent.
 
@@ -181,13 +172,13 @@ mochaSpawn.onStop(function (opts, done) {
 
 
 
-###mochaSpawn.send(eventName[, data...])
+### mochaSpawn.send(eventName[, data...])
 
 Send event up to the test in parent process.
 
 
 
-###mochaSpawn.on(eventName, handler)
+### mochaSpawn.on(eventName, handler)
 
 Receive event from parent process.
 
@@ -209,7 +200,7 @@ mochaSpawn.on('do-some-thing', function (params) {
 
 
 
-##With async/await
+## With async/await
 
 requires node ^7.10.0
 

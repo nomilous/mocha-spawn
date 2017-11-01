@@ -1,4 +1,4 @@
-const MochaFork = require('../..');
+const MochaSpawn = require('../..');
 
 const failPromise = (message) => {
 
@@ -10,13 +10,13 @@ const failPromise = (message) => {
 
 };
 
-MochaFork.onStart(async function (opts) {
+MochaSpawn.onStart(async function (opts) {
 
   await failPromise('Failed to start');
 
 });
 
-MochaFork.onStop(async function (opts, done) {
+MochaSpawn.onStop(async function (opts, done) {
 
   await failPromise('Failed to stop');
   done();

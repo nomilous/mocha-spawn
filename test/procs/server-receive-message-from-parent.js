@@ -1,12 +1,12 @@
-var MochaFork = require('../..');
+var MochaSpawn = require('../..');
 
-MochaFork.onStart(function (opts, done) {
+MochaSpawn.onStart(function (opts, done) {
 
   done();
 
 });
 
-MochaFork.on('event-name', function (data) {
+MochaSpawn.on('event-name', function (data) {
 
   if (data.kill) process.exit(1);
 

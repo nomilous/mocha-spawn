@@ -1,4 +1,4 @@
-var MochaFork = require('..');
+var MochaSpawn = require('..');
 var path = require('path');
 var expect = require('expect.js');
 
@@ -15,7 +15,7 @@ describe('with message and kill', function () {
 
   });
 
-  var childRef = MochaFork.before.start(scriptFile, scriptOpts);
+  var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
 
   it('can send message from child and kill', function (done) {
 
@@ -53,4 +53,3 @@ describe('with message and kill', function () {
   });
 
 });
-

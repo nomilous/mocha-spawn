@@ -1,4 +1,4 @@
-var MochaFork = require('..');
+var MochaSpawn = require('..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
@@ -39,7 +39,7 @@ describe('with async await error', function () {
 
     };
 
-    childRef = MochaFork.before.start(scriptFile, scriptOpts);
+    childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
 
   });
 

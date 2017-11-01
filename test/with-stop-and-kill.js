@@ -1,4 +1,4 @@
-var MochaFork = require('..');
+var MochaSpawn = require('..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
@@ -11,7 +11,7 @@ describe('with stop and kill', function () {
     host: 'localhost'
   };
 
-  var childRef = MochaFork.before.start(scriptFile, scriptOpts);
+  var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
 
   childRef.after.stop({timeout: 1000});
 

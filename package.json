@@ -1,5 +1,5 @@
 {
-  "name": "mocha-fork",
+  "name": "mocha-spawn",
   "version": "2.0.2",
   "description": "Mocha hooks to start/stop background proccess in tests.",
   "engines": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nomilous/mocha-fork.git"
+    "url": "git+https://github.com/nomilous/mocha-spawn.git"
   },
   "keywords": [
     "mocha",
@@ -23,9 +23,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nomilous/mocha-fork/issues"
+    "url": "https://github.com/nomilous/mocha-spawn/issues"
   },
-  "homepage": "https://github.com/nomilous/mocha-fork#readme",
+  "homepage": "https://github.com/nomilous/mocha-spawn#readme",
   "devDependencies": {
     "coveralls": "^2.13.1",
     "expect.js": "^0.3.1",

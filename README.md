@@ -33,7 +33,7 @@ The `opts` will be passed to the [mochaSpawn.onStart(fn)](#mochaspawnonstartfn) 
 
 The returned `childRef` will be used for intraprocess communication and to create the necesary `after` or `afterEach` hooks to stop the child where necessary.
 
-Include `opts.timeout` in milliseconds to adjust hook timeout.
+Include `opts.hookTimeout` in milliseconds to adjust hook timeout.
 
 
 
@@ -46,7 +46,7 @@ Creates an `after` of `afterEach` hook in the test to stop the child process cle
 
 If the hook times out it means that the child did not relinquish all resources (eg. still listening on socket or running a setInterval). Try [childRef.after.kill([opts])](#childrefafterkillopts) if all else fails.
 
-Include `opts.timeout` in milliseconds to adjust hook timeout.
+Include `opts.hookTimeout` in milliseconds to adjust hook timeout.
 
 
 
@@ -82,7 +82,7 @@ describe('with background process', function () {
 
 Creates an `after` or `afterEach` hook to kill the child process. Does not call  [mochaSpawn.onStop(fn)](#mochaspawnonstopfn) handler `fn` in the child process.
 
-Include `opts.timeout` in milliseconds to adjust hook timeout.
+Include `opts.hookTimeout` in milliseconds to adjust hook timeout.
 
 
 

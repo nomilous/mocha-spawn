@@ -1,10 +1,10 @@
 var mochaSpawn = require('../..');
-var RemoteAgent = mochaSpawn.RemoteAgent;
+var Agent = mochaSpawn.Agent;
 
-var agent = new RemoteAgent();
+var agent;
 
 mochaSpawn.onStart(function (opts, done) {
-
+  agent = new Agent(opts);
   agent.on('error', function (err) {
     mochaSpawn.send('error', err.stack);
   });

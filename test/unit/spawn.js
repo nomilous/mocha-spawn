@@ -1,9 +1,9 @@
 var expect = require('expect.js');
 var child_process = require('child_process');
 
-var fork = require('../../lib/fork');
+var spawn = require('../../lib/spawn');
 
-describe('unit - fork', function () {
+describe('unit - spawn', function () {
 
   var originalBefore = global.before;
 
@@ -70,7 +70,7 @@ describe('unit - fork', function () {
 
       };
 
-      fork.before.start('/script');
+      spawn.before.start('/script');
 
     });
 
@@ -80,7 +80,7 @@ describe('unit - fork', function () {
 
         it('does not send if child does not exist', function () {
 
-          var childRef = fork.before.start('/script');
+          var childRef = spawn.before.start('/script');
 
           childRef.send();
 
@@ -114,7 +114,7 @@ describe('unit - fork', function () {
 
           };
 
-          var childRef = fork.before.start('/script');
+          var childRef = spawn.before.start('/script');
 
           childRef.send();
 
@@ -132,7 +132,7 @@ describe('unit - fork', function () {
 
           };
 
-          var childRef = fork.before.start('/script');
+          var childRef = spawn.before.start('/script');
 
           childRef.after.stop();
 
@@ -172,7 +172,7 @@ describe('unit - fork', function () {
 
           };
 
-          var childRef = fork.before.start('/script');
+          var childRef = spawn.before.start('/script');
 
           childRef.after.stop();
 
@@ -190,7 +190,7 @@ describe('unit - fork', function () {
 
           };
 
-          var childRef = fork.before.start('/script');
+          var childRef = spawn.before.start('/script');
 
           childRef.after.kill();
 

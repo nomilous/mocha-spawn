@@ -42,7 +42,7 @@ Include `opts.hookTimeout` in milliseconds to adjust hook timeout.
 
 * `opts` \<Object> Optional stopping parameters to pass to the child.
 
-Creates an `after` of `afterEach` hook in the test to stop the child process cleanly. In other words, to call the [mochaSpawn.onStop(fn)](#mochaspawnonstopfn) in the client script and allow the child to tear itself down neatly with whatever code was placed in that handler `fn` - and then wait for the child to exit.
+Creates an `after` or `afterEach` hook in the test to stop the child process cleanly. In other words, to call the [mochaSpawn.onStop(fn)](#mochaspawnonstopfn) in the client script and allow the child to tear itself down neatly with whatever code was placed in that handler `fn` - and then wait for the child to exit.
 
 If the hook times out it means that the child did not relinquish all resources (eg. still listening on socket or running a setInterval). Try [childRef.after.kill([opts])](#childrefafterkillopts) if all else fails.
 

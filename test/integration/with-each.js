@@ -12,7 +12,9 @@ describe('with each', function () {
     host: 'localhost'
   };
 
-  var childRef = mochaSpawn.beforeEach.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.beforeEach.start({
+    script: scriptFile
+  }, scriptOpts);
 
   childRef.afterEach.stop();
 

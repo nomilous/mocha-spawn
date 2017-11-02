@@ -34,7 +34,9 @@ describe('with error', function () {
 
     };
 
-    childRef = mochaSpawn.before.start(scriptFile);
+    childRef = mochaSpawn.before.start({
+      script: scriptFile
+    });
 
   });
 

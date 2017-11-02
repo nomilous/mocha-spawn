@@ -5,7 +5,9 @@ describe('with no die', function () {
 
   var scriptFile = path.resolve(__dirname, '..', 'procs', 'server-with-no-die');
 
-  var childRef = mochaSpawn.before.start(scriptFile);
+  var childRef = mochaSpawn.before.start({
+    script: scriptFile
+  });
 
   // childRef.after.stop();
 

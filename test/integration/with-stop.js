@@ -12,7 +12,9 @@ describe('with stop', function () {
     timeout: 1000
   };
 
-  var childRef = mochaSpawn.before.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.before.start({
+    script: scriptFile
+  }, scriptOpts);
 
   childRef.after.stop({
     timeout: 1000

@@ -6,6 +6,22 @@ Mocha hooks to start/stop background local or remote proccesses in tests.
 
 
 
+
+
+
+
+
+
+TRY ON NODE 0.x.x
+
+
+
+
+
+
+
+
+
 ```
 npm install mocha-spawn --save-dev
 ```
@@ -20,11 +36,13 @@ const mochaSpawn = require('mocha-spawn');
 
 
 
-### mochaSpawn.before.start(scriptPath[, opts])
-### mochaSpawn.beforeEach.start(scriptPath[, opts])
+### mochaSpawn.before.start(run[, opts])
+### mochaSpawn.beforeEach.start(run[, opts])
 
- * `scriptPath` \<string> Absolute path to the script to run in the child process.
- * `opts` \<Object> Optional parameters to pass to the starting child.
+ * `run` \<Object> 
+    * `script` \<string> Absolute path to the script to run in the child process.
+    * `timeout` \<number> Hook timeout if 2000ms is undesirable.
+ * `opts` \<Object> Optional. Parameters to pass to the starting child.
  * Returns \<childRef> A reference to the child facilitation further interaction.
 
 Creates a `before` or `beforeEach` hook that starts the child process accordingly.
@@ -33,20 +51,20 @@ The `opts` will be passed to the [mochaSpawn.onStart(fn)](#mochaspawnonstartfn) 
 
 The returned `childRef` will be used for intraprocess communication and to create the necesary `after` or `afterEach` hooks to stop the child where necessary.
 
-Include `opts.hookTimeout` in milliseconds to adjust hook timeout.
 
 
+### childRef.after.stop([run]\[, opts])
+### childRef.afterEach.stop([run]\[, opts])
 
-### childRef.after.stop([opts])
-### childRef.afterEach.stop([opts])
-
+* `run` \<Object> Optional.
+  * `timeout` \<number> Hook timeout if 2000ms is undesirable.
 * `opts` \<Object> Optional stopping parameters to pass to the child.
 
 Creates an `after` or `afterEach` hook in the test to stop the child process cleanly. In other words, to call the [mochaSpawn.onStop(fn)](#mochaspawnonstopfn) in the client script and allow the child to tear itself down neatly with whatever code was placed in that handler `fn` - and then wait for the child to exit.
 
 If the hook times out it means that the child did not relinquish all resources (eg. still listening on socket or running a setInterval). Try [childRef.after.kill([opts])](#childrefafterkillopts) if all else fails.
 
-Include `opts.hookTimeout` in milliseconds to adjust hook timeout.
+Pass `run` as null of `opts` are required without it.
 
 
 
@@ -77,12 +95,13 @@ describe('with background process', function () {
 
 
 
-### childRef.after.kill([opts])
-### childRef.afterEach.kill([opts])
+### childRef.after.kill([run])
+### childRef.afterEach.kill([run])
+
+* `run` \<Object> Optional.
+  * `timeout` \<number> Hook timeout if 2000ms is undesirable.
 
 Creates an `after` or `afterEach` hook to kill the child process. Does not call  [mochaSpawn.onStop(fn)](#mochaspawnonstopfn) handler `fn` in the child process.
-
-Include `opts.hookTimeout` in milliseconds to adjust hook timeout.
 
 
 

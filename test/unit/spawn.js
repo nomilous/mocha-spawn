@@ -70,7 +70,7 @@ describe('unit - spawn', function () {
 
       };
 
-      spawn.before.start('/script');
+      spawn.before.start({script: '/script'});
 
     });
 
@@ -80,7 +80,7 @@ describe('unit - spawn', function () {
 
         it('does not send if child does not exist', function () {
 
-          var childRef = spawn.before.start('/script');
+          var childRef = spawn.before.start({script: '/script'});
 
           childRef.send();
 
@@ -114,7 +114,7 @@ describe('unit - spawn', function () {
 
           };
 
-          var childRef = spawn.before.start('/script');
+          var childRef = spawn.before.start({script: '/script'});
 
           childRef.send();
 
@@ -132,7 +132,7 @@ describe('unit - spawn', function () {
 
           };
 
-          var childRef = spawn.before.start('/script');
+          var childRef = spawn.before.start({script: '/script'});
 
           childRef.after.stop();
 
@@ -172,7 +172,7 @@ describe('unit - spawn', function () {
 
           };
 
-          var childRef = spawn.before.start('/script');
+          var childRef = spawn.before.start({script: '/script'});
 
           childRef.after.stop();
 
@@ -190,7 +190,7 @@ describe('unit - spawn', function () {
 
           };
 
-          var childRef = spawn.before.start('/script');
+          var childRef = spawn.before.start({script: '/script'});
 
           childRef.after.kill();
 

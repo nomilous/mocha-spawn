@@ -38,7 +38,9 @@ describe('with async await error', function () {
 
     };
 
-    childRef = mochaSpawn.before.start(scriptFile, scriptOpts);
+    childRef = mochaSpawn.before.start({
+      script: scriptFile
+    }, scriptOpts);
 
   });
 

@@ -11,11 +11,17 @@ describe('with stop and kill', function () {
     host: 'localhost'
   };
 
-  var childRef = mochaSpawn.before.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.before.start({
+    script: scriptFile
+  }, scriptOpts);
 
-  childRef.after.stop({timeout: 1000});
+  childRef.after.stop({
+    timeout: 1000
+  });
 
-  childRef.after.kill({timeout: 1000});
+  childRef.after.kill({
+    timeout: 1000
+  });
 
   it('started server', function (done) {
 

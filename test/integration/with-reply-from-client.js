@@ -6,7 +6,10 @@ describe('with reply from client', function () {
 
   var scriptFile = path.resolve(__dirname, '..', 'procs', 'server-with-reply');
 
-  var childRef = mochaSpawn.before.start(scriptFile);
+  var childRef = mochaSpawn.before.start({
+  script: scriptFile
+}
+);
 
   childRef.after.stop();
 

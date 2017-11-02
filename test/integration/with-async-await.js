@@ -14,7 +14,9 @@ describe('with async await', function () {
     host: 'localhost'
   };
 
-  var childRef = mochaSpawn.before.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.before.start({
+    script: scriptFile
+  }, scriptOpts);
 
   childRef.after.stop();
 

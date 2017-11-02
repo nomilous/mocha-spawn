@@ -1,7 +1,7 @@
 var mochaSpawn = require('../..');
 var path = require('path');
 
-describe('with remote', function () {
+xdescribe('with remote', function () {
 
   var securityToken = 'xxx';
   var agentServerScript = path.resolve(__dirname, '..', 'procs', 'agent-server-script');
@@ -20,11 +20,19 @@ describe('with remote', function () {
 
   var remoteScript = path.resolve(__dirname, '..', 'procs', 'remote-process');
 
-  var childRef1 = mochaSpawn.before.startRemote(remoteScript, {START_OPTS: 1});
-  var childRef2 = mochaSpawn.beforeEach.startRemote(remoteScript, {START_OPTS: 2});
+  var childRef1 = mochaSpawn.before.startRemote(remoteScript, {
+    START_OPTS: 1
+  });
+  var childRef2 = mochaSpawn.beforeEach.startRemote(remoteScript, {
+    START_OPTS: 2
+  });
 
-  childRef1.after.stop({STOP_OPTS: 1});
-  childRef2.afterEach.stop({STOP_OPTS: 2});
+  childRef1.after.stop({
+    STOP_OPTS: 1
+  });
+  childRef2.afterEach.stop({
+    STOP_OPTS: 2
+  });
 
   mochaSpawn.after.disconnect();
 

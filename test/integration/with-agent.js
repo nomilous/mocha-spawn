@@ -1,57 +1,63 @@
 var mochaSpawn = require('../..');
 var path = require('path');
 
-xdescribe('with remote', function () {
+describe('with remote', function () {
 
-  var securityToken = 'xxx';
-  var agentServerScript = path.resolve(__dirname, '..', 'procs', 'agent-server-script');
-  var agentServer = mochaSpawn.before.start(agentServerScript, {
-    securityToken: securityToken
-  });
+  var agentRun = {
+    script: path.resolve(__dirname, '..', 'procs', 'agent-server-script'),
+  }
+
+  // // normally this is done using bin/mocha-spawn-agent on remote host
+  // var agentServer = mochaSpawn.before.start(agentRun, {
+  //   securityToken: 'XXX',
+  //   path: path.resolve(__dirname, '..', '..')
+  // });
 
   mochaSpawn.before.connect({
     agents: [{
-      securityToken: securityToken,
+      securityToken: 'XXX',
       host: 'localhost',
       // port: 59595,
       rejectUnauthorized: false
     }]
   });
 
-  var remoteScript = path.resolve(__dirname, '..', 'procs', 'remote-process');
+  var remoteScriptRun = {
+    script: 'test/proc/remote-process'
+  };
 
-  var childRef1 = mochaSpawn.before.startRemote(remoteScript, {
+  var childRef1 = mochaSpawn.before.startRemote(remoteScriptRun, {
     START_OPTS: 1
   });
-  var childRef2 = mochaSpawn.beforeEach.startRemote(remoteScript, {
-    START_OPTS: 2
-  });
+  // var childRef2 = mochaSpawn.beforeEach.startRemote(remoteScriptRun, {
+  //   START_OPTS: 2
+  // });
 
-  childRef1.after.stop({
+  childRef1.after.stop(null, {
     STOP_OPTS: 1
   });
-  childRef2.afterEach.stop({
-    STOP_OPTS: 2
-  });
+  // childRef2.afterEach.stop(null, {
+  //   STOP_OPTS: 2
+  // });
 
   mochaSpawn.after.disconnect();
 
-  agentServer.after.stop();
-
-  // just in case
-  agentServer.on('error', function (err) {
-    console.error('AGENT SERVER ERROR', err);
-  });
+  // agentServer.after.stop();
+  //
+  // // just in case
+  // agentServer.on('error', function (err) {
+  //   console.error('AGENT SERVER ERROR', err);
+  // });
 
   it('started remote processes', function (done) {
 
-    this.timeout(6000);
+    this.timeout(10000);
 
     setTimeout(done, 500);
 
   });
 
-  it('started a new instance where beforeEach', function (done) {
+  xit('started a new instance where beforeEach', function (done) {
 
     this.timeout(6000);
 

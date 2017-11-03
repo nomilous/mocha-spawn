@@ -54,7 +54,7 @@ describe('with remote', function () {
 
     this.timeout(10000);
 
-    setTimeout(done, 1000);
+    setTimeout(done, 500);
 
   });
 
@@ -65,5 +65,7 @@ describe('with remote', function () {
     setTimeout(done, 500);
 
   });
+
+  it('can send and receive messages from process');
 
 });

@@ -5,7 +5,7 @@ mochaSpawn.onStart(function (opts, done) {
 
   console.log('REMOTE PROCESS START', opts);
   interval = setInterval(function () {}, 100);
-  // done();
+  done(new Error('oh noh'));
 
 });
 

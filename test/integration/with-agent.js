@@ -465,7 +465,162 @@ describe('with remote', function () {
 
   context('kill', function () {
 
-    it('handles kill ok');
+    var testContext;
+
+    beforeEach(function () {
+      this.before = global.before;
+      this.after = global.after;
+
+      testContext = {
+        timeout: function () {}
+      }
+    });
+
+    afterEach(function () {
+      global.before = this.before;
+      global.after = this.after;
+    });
+
+    it('stops remote precesses on kill timeout', function (done) {
+
+      var pid;
+
+      global.before = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e).to.equal(undefined);
+
+            pid = agentServer.sockets[0].procs[0]._child.pid;
+
+          } catch (e) {
+
+            return done(e);
+
+          }
+
+          childRef.after.kill({
+            timeout: 0
+          });
+
+        });
+
+      }
+
+      global.after = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e.name).to.equal('Error');
+            expect(e.message).to.equal('Timeout of 500ms exceeded.');
+
+            setTimeout(function () {
+
+              expect(agentServer.sockets[0].procs).to.eql([]);
+              expect(mochaSpawn.agents[0].procs).to.eql([]);
+
+              try {
+                process.kill(pid, 0);
+              } catch (e) {
+                return done();
+              }
+
+              throw new Error('child not stopped');
+
+            }, 500);
+
+          } catch (e) {
+
+            done(e);
+
+          }
+
+        });
+
+      }
+
+      var run = {
+        script: 'test/procs/remote-kill-timeout',
+        timeout: 500
+      }
+
+      var childRef = mochaSpawn.before.startRemote(run);
+
+    });
+
+    it('handles kill ok', function (done) {
+
+      var pid;
+
+      global.before = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e).to.equal(undefined);
+
+            pid = agentServer.sockets[0].procs[0]._child.pid;
+
+          } catch (e) {
+
+            return done(e);
+
+          }
+
+          childRef.after.kill({
+            timeout: 500
+          });
+
+        });
+
+      }
+
+      global.after = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e).to.equal(undefined);
+
+            setTimeout(function () {
+
+              expect(agentServer.sockets[0].procs).to.eql([]);
+              expect(mochaSpawn.agents[0].procs).to.eql([]);
+
+              try {
+                process.kill(pid, 0);
+              } catch (e) {
+                return done();
+              }
+
+              throw new Error('child not stopped');
+
+            }, 500);
+
+          } catch (e) {
+
+            done(e);
+
+          }
+
+        });
+
+      }
+
+      var run = {
+        script: 'test/procs/remote-kill-ok',
+        timeout: 500
+      }
+
+      var childRef = mochaSpawn.before.startRemote(run);
+
+    });
 
   });
 
@@ -483,13 +638,13 @@ describe('with remote', function () {
 
   });
 
-  context('groups', function () {
+  context('multiples', function () {
 
     it('todo');
 
   });
 
-  context('multiples', function () {
+  context('groups', function () {
 
     it('todo');
 

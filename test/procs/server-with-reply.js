@@ -1,18 +1,18 @@
-var MochaSpawn = require('../..');
+var mochaSpawn = require('../..');
 
-MochaSpawn.on('request-from-server', function (arg1, arg2) {
+mochaSpawn.on('request-from-server', function (arg1, arg2) {
 
-  MochaSpawn.send('reply-from-client', arg1, arg2);
+  mochaSpawn.send('reply-from-client', arg1, arg2);
 
 });
 
-MochaSpawn.onStart(function (opts, done) {
+mochaSpawn.onStart(function (opts, done) {
 
   done();
 
 });
 
-MochaSpawn.onStop(function (opts, done) {
+mochaSpawn.onStop(function (opts, done) {
 
   done();
 

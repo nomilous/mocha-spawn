@@ -1,20 +1,22 @@
-var MochaSpawn = require('..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
 var semver = require('semver');
 
-if (!semver.satisfies(process.version, '^7.10.0')) return;
+if (!semver.satisfies(process.version, '>=7.10.0')) return;
 
 describe('with async await', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'http-server-with-async');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'http-server-with-async');
   var scriptOpts = {
     port: 8080,
     host: 'localhost'
   };
 
-  var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.before.start({
+    script: scriptFile
+  }, scriptOpts);
 
   childRef.after.stop();
 

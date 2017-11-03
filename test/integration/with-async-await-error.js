@@ -1,10 +1,14 @@
-var MochaSpawn = require('..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var expect = require('expect.js');
+var semver = require('semver');
 
-describe('with error', function () {
+if (!semver.satisfies(process.version, '>=7.10.0')) return;
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'server-with-errors');
+describe('with async await error', function () {
+
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'server-with-async-errors');
+  var scriptOpts = {};
 
   var originalBefore = global.before;
   var originalAfter = global.after;
@@ -18,7 +22,7 @@ describe('with error', function () {
 
   var childRef;
 
-  it('can error on start', function (done) {
+  it('handles async rejections on start', function (done) {
 
     global.before = function (title, fn) {
 
@@ -34,11 +38,13 @@ describe('with error', function () {
 
     };
 
-    childRef = MochaSpawn.before.start(scriptFile);
+    childRef = mochaSpawn.before.start({
+      script: scriptFile
+    }, scriptOpts);
 
   });
 
-  it('can error on stop', function (done) {
+  it('handles async rejections on stop', function (done) {
 
     global.after = function (title, fn) {
 

@@ -1,4 +1,4 @@
-const MochaSpawn = require('../..');
+const mochaSpawn = require('../..');
 
 const failPromise = (message) => {
 
@@ -10,13 +10,13 @@ const failPromise = (message) => {
 
 };
 
-MochaSpawn.onStart(async function (opts) {
+mochaSpawn.onStart(async function (opts) {
 
   await failPromise('Failed to start');
 
 });
 
-MochaSpawn.onStop(async function (opts, done) {
+mochaSpawn.onStop(async function (opts, done) {
 
   await failPromise('Failed to stop');
   done();

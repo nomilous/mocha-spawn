@@ -20,3 +20,7 @@
 ## 2.0.1 - 16 May 2017
 
 - kill all children on parent exit
+
+## 3.0.0 - 03 November 2017
+
+- modified api, see README

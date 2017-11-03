@@ -1,10 +1,10 @@
-var MochaSpawn = require('..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var expect = require('expect.js');
 
 describe('with message and kill', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'server-send-message-to-parent');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'server-send-message-to-parent');
   var scriptOpts = {};
 
   var originalAfter = global.after;
@@ -15,7 +15,9 @@ describe('with message and kill', function () {
 
   });
 
-  var childRef = MochaSpawn.before.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.before.start({
+    script: scriptFile
+  }, scriptOpts);
 
   it('can send message from child and kill', function (done) {
 
@@ -36,7 +38,9 @@ describe('with message and kill', function () {
 
     childRef.once('event-name', function (data1, data2) {
 
-      expect(data1).to.eql({some: 'data from child'});
+      expect(data1).to.eql({
+        some: 'data from child'
+      });
       expect(data2).to.equal('more');
       childRef.after.kill();
 

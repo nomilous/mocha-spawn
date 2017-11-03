@@ -1,4 +1,4 @@
-var MochaSpawn = require('..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
@@ -6,13 +6,15 @@ var expect = require('expect.js');
 describe('with each', function () {
 
   var pids = [];
-  var scriptFile = path.resolve(__dirname, 'procs', 'http-server-with-stop');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'http-server-with-stop');
   var scriptOpts = {
     port: 8080,
     host: 'localhost'
   };
 
-  var childRef = MochaSpawn.beforeEach.start(scriptFile, scriptOpts);
+  var childRef = mochaSpawn.beforeEach.start({
+    script: scriptFile
+  }, scriptOpts);
 
   childRef.afterEach.stop();
 

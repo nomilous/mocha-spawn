@@ -1,23 +1,29 @@
-var MochaSpawn = require('..');
+var mochaSpawn = require('../..');
 var path = require('path');
 var fetchUrl = require('fetch').fetchUrl;
 var expect = require('expect.js');
 
 describe('with multiple same script', function () {
 
-  var scriptFile = path.resolve(__dirname, 'procs', 'http-server-with-stop');
+  var scriptFile = path.resolve(__dirname, '..', 'procs', 'http-server-with-stop');
 
-  var childRef1 = MochaSpawn.before.start(scriptFile, {
+  var childRef1 = mochaSpawn.before.start({
+    script: scriptFile
+  }, {
     port: 8080,
     host: 'localhost'
   });
 
-  var childRef2 = MochaSpawn.before.start(scriptFile, {
+  var childRef2 = mochaSpawn.before.start({
+    script: scriptFile
+  }, {
     port: 8081,
     host: 'localhost'
   });
 
-  var childRef3 = MochaSpawn.before.start(scriptFile, {
+  var childRef3 = mochaSpawn.before.start({
+    script: scriptFile
+  }, {
     port: 8082,
     host: 'localhost'
   });

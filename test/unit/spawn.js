@@ -37,7 +37,7 @@ describe('unit - spawn', function () {
 
         var doneFn = function (error) {
 
-          expect(error.message).to.be('Child exited unexpectedly with code undefined, perhaps missing onStart()');
+          expect(error.message).to.be('Child exited immediately with code undefined, perhaps missing onStart()');
           done();
 
         };

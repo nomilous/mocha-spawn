@@ -1,7 +1,7 @@
 {
   "name": "mocha-spawn",
   "version": "3.0.0",
-  "description": "Mocha hooks to start/stop background local or remote proccesses in tests.",
+  "description": "Mocha hooks to start/stop background  processes in tests.",
   "engines": {
     "node": ">=4"
   },
@@ -37,12 +37,5 @@
     "mocha": "^3.3.0",
     "semver": "^5.3.0"
   },
-  "dependencies": {
-    "commander": "^2.11.0",
-    "debug": "^3.1.0",
-    "pem": "^1.12.3",
-    "shortid": "^2.2.8",
-    "socket.io": "^2.0.4",
-    "socket.io-client": "^2.0.4"
-  }
+  "dependencies": {}
 }

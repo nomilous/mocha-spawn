@@ -2,25 +2,7 @@
 
 # mocha-spawn
 
-Mocha hooks to start/stop background local or remote proccesses in tests.
-
-
-
-
-
-
-
-
-
-TRY ON NODE 0.x.x
-
-MAKE WORK WITH WIN32 CLIENT AND SERVER SIDE?
-
-
-
-
-
-
+Mocha hooks to start/stop background  processes in tests.
 
 
 

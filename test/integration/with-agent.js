@@ -3,10 +3,10 @@ var path = require('path');
 
 describe('with remote', function () {
 
-  var agentRun = {
-    script: path.resolve(__dirname, '..', 'procs', 'agent-server-script'),
-  }
-
+  // var agentRun = {
+  //   script: path.resolve(__dirname, '..', 'procs', 'agent-server-script'),
+  // }
+  //
   // // normally this is done using bin/mocha-spawn-agent on remote host
   // var agentServer = mochaSpawn.before.start(agentRun, {
   //   securityToken: 'XXX',
@@ -34,7 +34,9 @@ describe('with remote', function () {
   //   START_OPTS: 2
   // });
 
-  childRef1.after.stop(null, {
+  childRef1.after.stop({
+    timeout: 500
+  }, {
     STOP_OPTS: 1
   });
   // childRef2.afterEach.stop(null, {
@@ -66,6 +68,5 @@ describe('with remote', function () {
 
   });
 
-  it('can send and receive messages from process');
 
 });

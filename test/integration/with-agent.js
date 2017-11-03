@@ -51,44 +51,52 @@ describe('with remote', function () {
       global.after = this.after;
     });
 
-    xit('stops remote precesses on timeout', function (done) {
+    it('stops remote precesses on timeout', function (done) {
 
       global.before = function (str, hookFn) {
 
         hookFn.call(testContext, function (e) {
 
-          expect(e.name).to.be('Error');
-          expect(e.message).to.be('Timeout of 100ms exceeded.');
-
-          // the child whose "start" timed out is not left
-          // laying around, it gets killed
-          var pid = agentServer.sockets[0].procs[0]._child.pid;
-
           try {
-            // ensure child was started
-            process.kill(pid, 0);
-          } catch (e) {
-            throw new Error('missing child');
-          }
 
-          setTimeout(function () {
+            expect(e.name).to.be('Error');
+            expect(e.message).to.be('Timeout of 500ms exceeded.');
 
-            // ensure that client and server no longer have
-            // reference to process
-            expect(agentServer.sockets[0].procs).to.eql([]);
-            expect(mochaSpawn.agents[0].procs).to.eql([]);
-
-            // ensure process is gone
+            // the child whose "start" timed out is not left
+            // laying around, it gets killed
+            var pid = agentServer.sockets[0].procs[0]._child.pid;
 
             try {
+              // ensure child was started
               process.kill(pid, 0);
             } catch (e) {
-              return done();
+              throw new Error('missing child');
             }
 
-            throw new Error('child not killed');
+            setTimeout(function () {
 
-          }, 500);
+              // ensure that client and server no longer have
+              // reference to process
+              expect(agentServer.sockets[0].procs).to.eql([]);
+              expect(mochaSpawn.agents[0].procs).to.eql([]);
+
+              // ensure process is gone
+
+              try {
+                process.kill(pid, 0);
+              } catch (e) {
+                return done();
+              }
+
+              throw new Error('child not killed');
+
+            }, 500);
+
+          } catch (e) {
+
+            done(e);
+
+          }
 
         });
 
@@ -109,38 +117,46 @@ describe('with remote', function () {
 
         hookFn.call(testContext, function (e) {
 
-          expect(e.name).to.be('Error');
-          expect(e.message).to.be('Some start error.');
-
-          // the child whose "start" timed out is not left
-          // laying around, it gets killed
-          var pid = agentServer.sockets[0].procs[0]._child.pid;
-
           try {
-            // ensure child was started
-            process.kill(pid, 0);
-          } catch (e) {
-            throw new Error('missing child');
-          }
 
-          setTimeout(function () {
+            expect(e.name).to.be('Error');
+            expect(e.message).to.be('Some start error.');
 
-            // ensure that client and server no longer have
-            // reference to process
-            expect(agentServer.sockets[0].procs).to.eql([]);
-            expect(mochaSpawn.agents[0].procs).to.eql([]);
-
-            // ensure process is gone
+            // the child whose "start" timed out is not left
+            // laying around, it gets killed
+            var pid = agentServer.sockets[0].procs[0]._child.pid;
 
             try {
+              // ensure child was started
               process.kill(pid, 0);
             } catch (e) {
-              return done();
+              throw new Error('missing child');
             }
 
-            throw new Error('child not killed');
+            setTimeout(function () {
 
-          }, 500);
+              // ensure that client and server no longer have
+              // reference to process
+              expect(agentServer.sockets[0].procs).to.eql([]);
+              expect(mochaSpawn.agents[0].procs).to.eql([]);
+
+              // ensure process is gone
+
+              try {
+                process.kill(pid, 0);
+              } catch (e) {
+                return done();
+              }
+
+              throw new Error('child not killed');
+
+            }, 500);
+
+          } catch (e) {
+
+            done(e);
+
+          }
 
         });
 
@@ -157,15 +173,25 @@ describe('with remote', function () {
 
     it('handles start ok', function (done) {
 
+      var pid;
+
       global.before = function (str, hookFn) {
 
         hookFn.call(testContext, function (e) {
 
-          expect(e).to.equal(undefined);
+          try {
+
+            expect(e).to.equal(undefined);
+
+            pid = agentServer.sockets[0].procs[0]._child.pid;
+
+          } catch (e) {
+
+            return done(e);
+
+          }
 
           childRef.after.stop();
-
-          return;
 
         });
 
@@ -207,19 +233,245 @@ describe('with remote', function () {
 
   context('stop', function () {
 
-    it('handles stop timeout');
+    var testContext;
 
-    it('handles stop error');
+    beforeEach(function () {
+      this.before = global.before;
+      this.after = global.after;
 
-    it('handles stop ok');
+      testContext = {
+        timeout: function () {}
+      }
+    });
+
+    afterEach(function () {
+      global.before = this.before;
+      global.after = this.after;
+    });
+
+    it('stops remote precesses on stop timeout', function (done) {
+
+      var pid;
+
+      global.before = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e).to.equal(undefined);
+
+            pid = agentServer.sockets[0].procs[0]._child.pid;
+
+          } catch (e) {
+
+            return done(e);
+
+          }
+
+          childRef.after.stop({
+            timeout: 500
+          });
+
+        });
+
+      }
+
+      global.after = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e.name).to.equal('Error');
+            expect(e.message).to.equal('Timeout of 500ms exceeded.');
+
+            setTimeout(function () {
+
+              expect(agentServer.sockets[0].procs).to.eql([]);
+              expect(mochaSpawn.agents[0].procs).to.eql([]);
+
+              try {
+                process.kill(pid, 0);
+              } catch (e) {
+                return done();
+              }
+
+              throw new Error('child not stopped');
+
+            }, 500);
+
+          } catch (e) {
+
+            done(e);
+
+          }
+
+        });
+
+      }
+
+      var run = {
+        script: 'test/procs/remote-stop-timeout',
+        timeout: 500
+      }
+
+      var childRef = mochaSpawn.before.startRemote(run);
+
+    });
+
+    it('stops remote precesses on stop error', function (done) {
+
+      var pid;
+
+      global.before = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e).to.equal(undefined);
+
+            pid = agentServer.sockets[0].procs[0]._child.pid;
+
+          } catch (e) {
+
+            return done(e);
+
+          }
+
+          childRef.after.stop({
+            timeout: 500
+          });
+
+        });
+
+      }
+
+      global.after = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e.name).to.equal('Error');
+            expect(e.message).to.equal('ooops');
+
+            setTimeout(function () {
+
+              expect(agentServer.sockets[0].procs).to.eql([]);
+              expect(mochaSpawn.agents[0].procs).to.eql([]);
+
+              try {
+                process.kill(pid, 0);
+              } catch (e) {
+                return done();
+              }
+
+              throw new Error('child not stopped');
+
+            }, 500);
+
+          } catch (e) {
+
+            done(e);
+
+          }
+
+        });
+
+      }
+
+      var run = {
+        script: 'test/procs/remote-stop-error',
+        timeout: 500
+      }
+
+      var childRef = mochaSpawn.before.startRemote(run);
+
+    });
+
+    it('handles stop ok', function (done) {
+
+      var pid;
+
+      global.before = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e).to.equal(undefined);
+
+            pid = agentServer.sockets[0].procs[0]._child.pid;
+
+          } catch (e) {
+
+            return done(e);
+
+          }
+
+          childRef.after.stop({
+            timeout: 500
+          });
+
+        });
+
+      }
+
+      global.after = function (str, hookFn) {
+
+        hookFn.call(testContext, function (e) {
+
+          try {
+
+            expect(e).to.equal(undefined);
+
+            setTimeout(function () {
+
+              expect(agentServer.sockets[0].procs).to.eql([]);
+              expect(mochaSpawn.agents[0].procs).to.eql([]);
+
+              try {
+                process.kill(pid, 0);
+              } catch (e) {
+                return done();
+              }
+
+              throw new Error('child not stopped');
+
+            }, 500);
+
+          } catch (e) {
+
+            done(e);
+
+          }
+
+        });
+
+      }
+
+      var run = {
+        script: 'test/procs/remote-stop-ok',
+        timeout: 500
+      }
+
+      var childRef = mochaSpawn.before.startRemote(run);
+
+    });
 
   });
 
   context('kill', function () {
 
-    it('handles kill timeout');
-
     it('handles kill ok');
+
+  });
+
+  context('messages', function () {
+
+    it('can send and receive message');
 
   });
 
@@ -228,12 +480,6 @@ describe('with remote', function () {
     it('has different pid...');
 
     it('...when beforeEach');
-
-  });
-
-  context('messages', function () {
-
-    it('can send and receive message');
 
   });
 

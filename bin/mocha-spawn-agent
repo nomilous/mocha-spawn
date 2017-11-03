@@ -12,6 +12,7 @@ var keyFile;
 var certFile;
 var key;
 var cert;
+var doDebug;
 
 function collect(val, memo) {
   memo.push(val);
@@ -27,7 +28,8 @@ program
   .option('-H, --host <addr>', 'assign hostname to listen, default 0.0.0.0')
   .option('-P, --port <num>', 'assign port to listen, default 59595')
   .option('-k, --ssl-key-file <path>', 'use specified SSL key')
-  .option('-c, --ssl-cert-file <path>', 'use specified certificate');
+  .option('-c, --ssl-cert-file <path>', 'use specified certificate')
+  .option('-d, --debug', 'display debug output');
 
 program.on('--help', function () {
   console.log('\n\n  Examples:');
@@ -47,6 +49,7 @@ var host = program.host;
 var port = program.port;
 var keyFile = program.sslKeyFile;
 var certFile = program.sslCertFile;
+var doDebug = program.debug;
 
 if (!repoPath) {
   program.outputHelp();
@@ -72,10 +75,12 @@ if (keyFile && certFile) {
 
 if (group.length == 0) group = ['any'];
 
-if (process.env.DEBUG) {
-  process.env.DEBUG += ',mocha-spawn:*';
-} else {
-  process.env.DEBUG = 'mocha-spawn:*';
+if (doDebug) {
+  if (process.env.DEBUG) {
+    process.env.DEBUG += ',mocha-spawn:*';
+  } else {
+    process.env.DEBUG = 'mocha-spawn:*';
+  }
 }
 
 var debug = require('debug')('mocha-spawn:agent');
@@ -95,7 +100,7 @@ agent = new AgentServer({
 });
 
 agent.on('error', function (err) {
-  debug(err.toString());
+  debug('agent error', err);
 });
 
 agent.start()

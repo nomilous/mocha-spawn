@@ -23,7 +23,8 @@ describe('with remote', function () {
   });
 
   var remoteScriptRun = {
-    script: 'test/proc/remote-process'
+    script: 'test/procs/remote-process',
+    timeout: 500
   };
 
   var childRef1 = mochaSpawn.before.startRemote(remoteScriptRun, {
@@ -53,7 +54,7 @@ describe('with remote', function () {
 
     this.timeout(10000);
 
-    setTimeout(done, 500);
+    setTimeout(done, 1000);
 
   });
 

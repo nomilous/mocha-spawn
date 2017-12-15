@@ -1,14 +1,11 @@
 {
   "name": "mocha-spawn",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "Mocha hooks to start/stop background  processes in tests.",
   "engines": {
     "node": ">=4"
   },
   "main": "index.js",
-  "bin": {
-    "mocha-spawn-agent": "bin/mocha-spawn-agent"
-  },
   "scripts": {
     "test": "mocha test/integration/*.js test/unit/*.js",
     "cover": "istanbul cover _mocha -- test/integration/*.js test/unit/*.js"

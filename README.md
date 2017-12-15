@@ -65,7 +65,7 @@ describe('with background process', function () {
   var scriptStopOpts = {};
 
   // create before hook that spawns script before tests
-  var childRef = mochaSpawn.before.start(scriptPath, scriptStartOpts);
+  var childRef = mochaSpawn.before.start({script: scriptPath}, scriptStartOpts);
 
   // create after hook that stops script after tests
   childRef.after.stop(scriptStopOpts);

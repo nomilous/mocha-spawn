@@ -24,3 +24,7 @@
 ## 3.0.0 - 03 November 2017
 
 - modified api, see README
+
+## 3.0.3 - 05 January 2017
+
+- fixed problem with detecting debug mode

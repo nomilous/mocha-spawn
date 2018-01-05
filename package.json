@@ -1,6 +1,6 @@
 {
   "name": "mocha-spawn",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Mocha hooks to start/stop background  processes in tests.",
   "engines": {
     "node": ">=4"

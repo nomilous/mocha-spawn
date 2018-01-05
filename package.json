@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/integration/*.js test/unit/*.js",
+    "test": "mocha --timeout 999999 test/integration/*.js test/unit/*.js",
     "cover": "istanbul cover _mocha -- test/integration/*.js test/unit/*.js"
   },
   "repository": {
